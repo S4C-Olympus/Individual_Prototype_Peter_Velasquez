@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -95,8 +94,42 @@ public class PlayerMovement : MonoBehaviour
         } 
     }
 
+    void FixedUpdate()
+    {
+        float targetSpeed = horizontalInput * moveSpeed;
+        float speedDifference = targetSpeed - rb.velocity.x;
+
+        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ?
+            (isGrounded ? acceleration : acceleration * airControl):
+            (isGrounded ? deceleration : deceleration * airControl);
+
+        float movement = Mathf.Pow(Mathf.Abs(speedDifference) 
+        * accelRate, velocityPower) * Mathf.Sign(speedDifference);
+
+        rb.AddForce(Vector2.right * movement);
+
+        if(rb.velocity.y < 0)
+        {
+            rb.gravityScale = gravityScale * fallMultiplier;
+        }
+        if(rb.velocity.y < maxFallSpeed)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+    }
     void Jump()
     {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        jumpCount--;
+        coyoteTime = 0;
+    }
 
+    void OnDrawGizmosSelected()
+    {
+        if(groundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
     }
 }
