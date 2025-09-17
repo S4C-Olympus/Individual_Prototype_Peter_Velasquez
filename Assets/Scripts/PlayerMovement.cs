@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump cut: if player releases jump button early
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)//change to up
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpCutMultiplier);
         }
@@ -135,14 +135,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.gravityScale = gravityScale * fallMultiplier;
         }
-        else
+        else//add
         {
             rb.gravityScale = gravityScale;
         }
         // Cap max fall speed
         if (rb.velocity.y < maxFallSpeed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);//Change to max fall speed
         }
     }
 
@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         jumpCount--;
-        coyoteTimer = 0;
+        coyoteTimer = 0;//add r
     }
 
     void OnDrawGizmosSelected()
