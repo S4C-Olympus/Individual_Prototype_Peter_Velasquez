@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         jumpCount--;
-        coyoteTimer = 0;//add r
+        coyoteTimer = 0;
     }
 
     void OnDrawGizmosSelected()
